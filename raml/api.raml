@@ -1,0 +1,137 @@
+#%RAML 0.8
+---
+title: Ymir
+baseUri: http://ymirrpg/{version}
+version: v1
+
+/worlds:
+  get:
+    description: Get list of all worlds
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "name": "The World",
+                },
+                {
+                  "name": "Another World",
+                }
+              ]
+  post: 
+    description: Create a new world
+    queryParameters:
+      name:
+        type: string
+        required: true
+  /{worldName}:
+    get: 
+      description: Get the world where `name == {worldName}`
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "name": "World name"
+                }
+    put:
+      description: Update the world where `name == {worldName}`
+    delete:
+      description: Delete the world where `name == {worldName}`
+
+  /characters:
+    get:
+      description: Get list of all characters
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "first name": "Skyler",
+                    "second name": "Berg",
+                    "name": "Skyler Berg",
+                    "place": "University of Oregon",
+                  },
+                  {
+                    "first name": "Jeff",
+                    "second name": "Bayes",
+                    "name": "Jeff Bayes",
+                    "place": "University of Oregon",
+                  }
+                ]
+    post:
+      description: Create a new character
+      queryParameters:
+        name:
+          type: string
+          required: true
+    /{characterName}:
+      get:
+        description: Get the character where `name == {characterName}`
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "first name": "Skyler",
+                    "second name": "Berg",
+                    "name": "Skyler Berg",
+                    "place": "University of Oregon",
+                  },
+      put:
+        description: Update the character where `name == {characterName}`
+      delete:
+        description: Delete the character where `name == {characterName}`
+
+  /places:
+    get:
+      description: Get list of all places in a world
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                [
+                  {
+                    "name": "University of Oregon"
+                    "world": "The World"
+                  },
+                ]
+
+    post:
+      description: Create a new place
+      queryParameters:
+        name:
+          type: string
+          required: true
+    /{placeName}:
+      get:
+        description: Get the place where `name == {placeName}`
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                  {
+                    "name": "University of Oregon"
+                    "world": "The World"
+                    "characters":
+                      [
+                        {
+                          "name": "Skyler Berg",
+                        },
+                        {
+                          "name": "Jeff Bayes",
+                        },
+                      ]
+                  },
+      put:
+        description: Update the place where `name == {placeName}`
+      delete:
+        description: Delete the place where `name == {placeName}`
